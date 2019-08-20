@@ -2,7 +2,7 @@
 """
 BSD 3-Clause License
 
-Copyright (c) 2018, Daniel Schäfer
+Copyright (c) 2018-2019, Daniel Schaefer
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -42,6 +42,9 @@ Advanced Configuration and Power Interface
 BIOS
 Basic Input/Output System
 BIOSes
+
+ProLiant
+HPE's Industry Standard Server
 ```
 
 to
@@ -58,17 +61,26 @@ to
   plural      = {BIOSes}
   description = {Basic Input/Output System}
 }
+
+
+\newglossaryentry{ProLiant} {
+  name        = {ProLiant}
+  description = {HPE's Industry Standard Server}
+}
 ```
 """
 
 def formatEntry(header, description, plural):
-    return "".join((
-        "\\newglossaryentry{{{}}} {{\n".format(header),
-        "  name        = {{{}}},\n".format(header),
-        "  plural      = {{{}}},\n".format(plural) if plural is not None else "",
-        "  description = {{{}}}\n".format(description),
-        "}\n"
-    ))
+    if header.isupper() and plural is None:
+        return "\\newacronym{{{}}}{{{}}}{{{}}}".format(header, header, description)
+    else:
+        return "".join((
+            "\\newglossaryentry{{{}}} {{\n".format(header),
+            "  name        = {{{}}},\n".format(header),
+            "  plural      = {{{}}},\n".format(plural) if plural is not None else "",
+            "  description = {{{}}}\n".format(description),
+            "}\n"
+        ))
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
