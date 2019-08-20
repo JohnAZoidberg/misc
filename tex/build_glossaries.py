@@ -115,3 +115,5 @@ if __name__ == '__main__':
                 print(formatEntry(header, description, plural))
                 plural = None
                 i = 0  # Start with next entry
+        # Print last entry
+        print(formatEntry(header, description, plural))
